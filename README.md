@@ -6,8 +6,16 @@ my thesis.
 
 ## Prerequisites
 
-Keras, tensorflow and [madmom](https://github.com/CPJKU/madmom). These
-can all be installed using pip.
+The Python packages Keras, tensorflow
+and [madmom](https://github.com/CPJKU/madmom). These can all be
+installed using pip. ffmpeg is also needed. If it isn't already
+installed it can be installed using:
+```
+$ cd /tmp && wget https://ffmpeg.org/releases/ffmpeg-4.1.tar.bz2 \
+    && tar xvjf ffmpeg-4.1.tar.bz2 && cd ffmpeg-4.1 \
+    && ./configure && make
+$ export PATH=/tmp/ffmpeg-4.1:$PATH
+```
 
 ## The Böck dataset
 
@@ -44,3 +52,23 @@ important that the cache file does not change during training or
 evaluation.
 
 ## Training
+
+Training is done using the `main.py` script:
+```
+$ python main.py -t 0:8 -n rnn --epochs 20
+```
+The above command would train the eight folds using the recurrent
+neural network (rnn) architecture for 20 epochs each.
+
+## Evaluation
+
+Evaluation is done using the `main.py` script:
+```
+$ python main.py -e 0:1 -n rnn
+...
+sum for 41 files
+  #:   3368 TP:   2861 FP:   387 FN:   507
+  Prec: 0.881 Rec: 0.849 F-score: 0.865
+```
+The above command evaluates the first fold (with index 0) of the rnn
+architecture.
